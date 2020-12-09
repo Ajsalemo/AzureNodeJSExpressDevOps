@@ -23,29 +23,26 @@ variables:
 stages:
   - stage: Build
     displayName: Build stage
+    pool:
+      vmImage: $(vmImageName)
     jobs:
-      - job: Build
-        displayName: Build
-        pool:
-          vmImage: $(vmImageName)
+    - job: Build_Staging
+      displayName: Build Staging
+      steps:
+        - script: |
+           npm install 
+           npm run build
+        - task: CopyFiles@2
+          displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
+          inputs:
+            SourceFolder: '$(System.DefaultWorkingDirectory)/build'
+            TargetFolder: '$(Build.ArtifactStagingDirectory)'
+        - task: PublishPipelineArtifact@1
+          inputs:
+            targetPath: $(System.DefaultWorkingDirectory)/build
+            artifact: 'drop'
+            publishLocation: 'pipeline'
 
-        steps:
-          - task: ArchiveFiles@2
-            displayName: "Archive files"
-            inputs:
-              rootFolderOrFile: "$(System.DefaultWorkingDirectory)"
-              includeRootFolder: false
-              archiveType: zip
-              archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-              replaceExistingArchive: true
-
-          - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-            artifact: drop
-
-          - script: |
-              npm install
-              npm run build
-            displayName: 'npm install and build'
 
   - stage: Deploy
     displayName: Deploy stage
