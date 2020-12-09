@@ -42,6 +42,11 @@ stages:
           - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
             artifact: drop
 
+          - script: |
+              npm install
+              npm run build
+            displayName: 'npm install and build'
+
   - stage: Deploy
     displayName: Deploy stage
     dependsOn: Build
