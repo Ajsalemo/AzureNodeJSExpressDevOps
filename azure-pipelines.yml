@@ -31,7 +31,6 @@ stages:
       steps:
         - script: |
            npm install 
-           npm run build
         - task: CopyFiles@2
           displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
           inputs:
