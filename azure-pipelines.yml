@@ -31,17 +31,16 @@ stages:
       steps:
         - script: |
            npm install 
-           npm run build
-        - task: CopyFiles@2
-          displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
+        - task: ArchiveFiles@2
+          displayName: 'Archive files'
           inputs:
-            SourceFolder: '$(System.DefaultWorkingDirectory)/build'
-            TargetFolder: '$(Build.ArtifactStagingDirectory)'
-        - task: PublishPipelineArtifact@1
-          inputs:
-            targetPath: $(System.DefaultWorkingDirectory)/build
-            artifact: 'drop'
-            publishLocation: 'pipeline'
+            rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+            includeRootFolder: false   
+            archiveType: zip  
+            archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+            replaceExistingArchive: true   
+        - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip  
+          artifact: drop
 
 
   - stage: Deploy
