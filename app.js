@@ -8,6 +8,7 @@ const usersRouter = require("./routes/users");
 const productsAllRouter = require("./routes/products_all");
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -23,7 +24,6 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/api/products_all", productsAllRouter);
 
-
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
@@ -33,6 +33,10 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render("error");
+});
+
+app.listen(PORT, () => {
+  console.log(`Listening on port: ${PORT}`);
 });
 
 module.exports = app;
