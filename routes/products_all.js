@@ -17,7 +17,7 @@ const listOfProducts = [
 ];
 
 router.get("/", (req, res, next) => {
-  res.setHeader('Set-Cookie', 'foo=bar');
+  res.setHeader('Set-Cookie', 'foo=bar; HttpOnly');
   res.json(listOfProducts)
 });
 
