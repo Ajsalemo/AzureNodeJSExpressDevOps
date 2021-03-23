@@ -5,7 +5,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-  - master
+  - main
 
 variables:
   # Azure Resource Manager connection created during pipeline creation
@@ -71,5 +71,4 @@ stages:
                     appType: "webApp"
                     WebAppName: "ansalemo-nodejs-linux"
                     packageForLinux: "$(Pipeline.Workspace)/drop/$(Build.BuildId).zip"
-                    startUpCommand: "npm run start"
 
