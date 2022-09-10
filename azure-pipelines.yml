@@ -9,13 +9,13 @@ trigger:
 variables:
 
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: 'f64cac9c-9df8-4237-b225-341bc936c1ba'
+  azureSubscription: 'subscriptionId'
 
   # Web app name
-  webAppName: 'ansalemo-node-devops-blog'
+  webAppName: 'appname'
 
   # Environment name
-  environmentName: 'ansalemo-node-devops-blog'
+  environmentName: 'appname'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -68,7 +68,7 @@ stages:
         deploy:
           steps:
           - task: AzureWebApp@1
-            displayName: 'Azure Web App Deploy: ansalemo-node-devops-blog'
+            displayName: 'Azure Web App Deploy: appname'
             inputs:
               azureSubscription: $(azureSubscription)
               appType: webAppLinux
